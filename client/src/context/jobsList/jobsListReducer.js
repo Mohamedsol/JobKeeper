@@ -11,8 +11,8 @@ import {
     JOB_ERROR
   } from '../types';
 
-  export default (state, action) => {
-      switch(action.type) {
+export default (state, action) => {
+    switch(action.type) {
         case ADD_JOB:
             return {
                 ...state,
@@ -23,6 +23,11 @@ import {
                 ...state,
                 jobsList: state.jobsList.filter( job => job.id !== action.payload)
             }
+        case UPDATE_JOB:
+            return {
+                ...state,
+                jobsList: state.jobsList.map(job => job.id === action.payload.id ? action.payload : job)
+            }    
         case SET_CURRENT:
             return {
                 ...state,
@@ -32,8 +37,21 @@ import {
             return {
                 ...state,
                 current: null
-            };   
-          default:
-              return state;
-      }
-  }
+            };
+        case FILTER_JOBS:
+            return {
+                ...state,
+                filtered: state.jobsList.filter(job => {
+                const regex = new RegExp(`${action.payload}`, 'gi');
+                return job.jobTitle.match(regex) || job.companyName.match(regex) || job.status.match(regex);
+                })
+            };
+        case CLEAR_FILTER:
+            return {
+                ...state,
+                filtered: null
+            };       
+        default:
+            return state;
+    }
+}

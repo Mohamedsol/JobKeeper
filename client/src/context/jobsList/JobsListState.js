@@ -40,7 +40,8 @@ const JobsListState = props => {
         status: 'onsite interview'
       }
     ],
-    current: null
+    current: null,
+    filtered: null
   };
 
   const [state, dispatch] = useReducer(jobsListReducer, initialState);
@@ -62,7 +63,9 @@ const JobsListState = props => {
    
   // Update job
   
-
+  const updateJob = job => {
+    dispatch({type: UPDATE_JOB, payload: job})
+  }
     
 
   // Clear jobs
@@ -80,20 +83,30 @@ const JobsListState = props => {
   
 
   // Filter jobs
-  
+  const filterJobs = text => {
+    dispatch({ type: FILTER_JOBS, payload: text})
+  }
 
   // Clear Filter
-  
+  const clearFilter = () => {
+    dispatch({ type: CLEAR_FILTER });
+  };
+
+
 
   return (
     <JobsListContext.Provider
       value={{
         jobsList: state.jobsList,
         current: state.current,
+        filtered: state.filtered,
         addJob,
         deleteJob,
         setCurrent,
-        clearCurrent
+        clearCurrent,
+        updateJob,
+        filterJobs,
+        clearFilter
       }}
     >
       {props.children}
