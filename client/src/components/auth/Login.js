@@ -53,6 +53,7 @@ const Login = () => {
             value={password}
             onChange={onChange}
             required
+            minLength='6'
           />
         </div>
         <input
