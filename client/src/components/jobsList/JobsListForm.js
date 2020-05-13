@@ -92,7 +92,7 @@ const JobsListForm = () => {
             type='radio'
             name='status'
             value='phone interview'
-            checked={status == 'phone interview'}
+            checked={status === 'phone interview'}
             onChange={onChange}
         />{' '}
         Phone Interview{' '}

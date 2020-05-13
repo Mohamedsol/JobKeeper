@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import axios from 'axios'
 import {v4 as uuid} from 'uuid';
 import JobsListContext from './jobsListContext';
 import jobsListReducer from './jobsListReducer';
@@ -17,29 +18,7 @@ import {
 
 const JobsListState = props => {
   const initialState = {
-    jobsList: [
-      {
-        id: 1,
-        jobTitle: 'Full stack web Devoloper',
-        companyName: 'Google',
-        city: 'Nashville',
-        status: 'onsite interview'
-      },
-      {
-        id: 2,
-        jobTitle: 'Software devoloper',
-        companyName: 'Amazon',
-        city: 'Nashville',
-        status: 'phone interview'
-      },
-      {
-        id: 3,
-        jobTitle: 'Software engineer',
-        companyName: 'FaceBook',
-        city: 'San Francisco',
-        status: 'onsite interview'
-      }
-    ],
+    jobsList: [],
     current: null,
     filtered: null
   };
@@ -52,7 +31,7 @@ const JobsListState = props => {
   // Add job
   
     const addJob = job => {
-      job.id = uuid();
+      
       dispatch({ type: ADD_JOB, payload: job})
     }
 
