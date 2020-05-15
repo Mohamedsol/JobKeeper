@@ -1,5 +1,6 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import Spinner from '../layout/Spinner'
 
 import JobsListItem from './JobsListItem';
 import JobsListContext from '../../context/jobsList/jobsListContext';
@@ -7,18 +8,21 @@ import JobsListContext from '../../context/jobsList/jobsListContext';
 const JobsList = () => {
   const jobsListContext = useContext(JobsListContext);
 
-  const { jobsList, filtered } = jobsListContext;
+  const { jobsList, filtered, getJobs, loading  } = jobsListContext;
 
-  
+  useEffect(() => {
+    getJobs();
+    // eslint-disable-next-line
+  }, [])
 
-  if (jobsList !== null && jobsList.length === 0) {
+  if (jobsList !== null && jobsList.length === 0 && !loading) {
     return <h4>Please add a Job</h4>;
   }
   
 
   return (
     <Fragment>
-        <TransitionGroup>
+      {jobsList !== null && !loading ? ( <TransitionGroup>
             { filtered !== null ? filtered.map(job => (
             <CSSTransition key={job._id} timeout={500} classNames='item'>
                 <JobsListItem job={job}/>
@@ -29,7 +33,9 @@ const JobsList = () => {
                 <JobsListItem job={job} />
             </CSSTransition>
       ))}
-        </TransitionGroup>
+        </TransitionGroup>) 
+        : <Spinner />}
+       
     </Fragment>
   );
 }

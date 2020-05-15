@@ -11,12 +11,13 @@ const Navbar = ({ title, icon }) => {
   const authContext = useContext(AuthContext);
   const jobsListContext = useContext(JobsListContext);
 
-  const { isAuthenticated, logout, user, loadUser } = authContext;
+  const { isAuthenticated, logout, user } = authContext;
   const { clearJobs } = jobsListContext;
 
 
   const onLogout = () => {
     logout();
+    clearJobs();
   };
 
   const authLinks = (

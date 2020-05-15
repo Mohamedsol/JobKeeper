@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react';
-import axios from 'axios'
-import {v4 as uuid} from 'uuid';
+import axios from 'axios';
 import JobsListContext from './jobsListContext';
 import jobsListReducer from './jobsListReducer';
 import {
@@ -18,7 +17,7 @@ import {
 
 const JobsListState = props => {
   const initialState = {
-    jobsList: [],
+    jobsList: null,
     current: null,
     filtered: null,
     error: null
@@ -28,7 +27,22 @@ const JobsListState = props => {
   const [state, dispatch] = useReducer(jobsListReducer, initialState);
 
   // Get jobs
-  
+  const getJobs = async () => {
+
+    try {
+      const res = await axios.get('/api/jobsList');
+
+      dispatch({
+        type: GET_JOBS,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: JOB_ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
 
   // Add job
   
@@ -56,19 +70,51 @@ const JobsListState = props => {
       };
 
   // Delete job
-    const deleteJob = id => {
-      dispatch({ type: DELETE_JOB, payload: id })
+    const deleteJob = async id => {
+
+      try {
+        await axios.delete(`/api/jobsList/${id}`);
+  
+        dispatch({
+          type: DELETE_JOB,
+          payload: id
+        });
+      } catch (err) {
+        dispatch({
+          type: JOB_ERROR,
+          payload: err.response.msg
+        });
+      }
     }
    
   // Update job
   
-  const updateJob = job => {
-    dispatch({type: UPDATE_JOB, payload: job})
-  }
-    
+  const updateJob = async job => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.put(`/api/jobsList/${job._id}`, job, config);
+
+      dispatch({
+        type: UPDATE_JOB,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: JOB_ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
 
   // Clear jobs
-  
+  const clearJobs = () => {
+    dispatch({ type: CLEAR_JOBS });
+  };
 
   // Set Current job
   const setCurrent = job => {
@@ -106,7 +152,9 @@ const JobsListState = props => {
         clearCurrent,
         updateJob,
         filterJobs,
-        clearFilter
+        clearFilter,
+        getJobs,
+        clearJobs
       }}
     >
       {props.children}

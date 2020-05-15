@@ -13,20 +13,37 @@ import {
 
 export default (state, action) => {
     switch(action.type) {
+        case GET_JOBS:
+            return {
+                ...state,
+                jobsList: action.payload,
+                loading: false
+            }
         case ADD_JOB:
             return {
                 ...state,
-                jobsList: [...state.jobsList, action.payload]
+                jobsList: [action.payload, ...state.jobsList],
+                loading: false
             }
         case DELETE_JOB:
             return {
                 ...state,
-                jobsList: state.jobsList.filter( job => job.id !== action.payload)
+                jobsList: state.jobsList.filter( job => job._id !== action.payload),
+                loading: false
             }
+        case CLEAR_JOBS:
+            return {
+                ...state,
+                jobsList: null,
+                filtered: null,
+                error: null,
+                current: null
+            }    
         case UPDATE_JOB:
             return {
                 ...state,
-                jobsList: state.jobsList.map(job => job.id === action.payload.id ? action.payload : job)
+                jobsList: state.jobsList.map(job => job._id === action.payload._id ? action.payload : job),
+                loading: false
             }    
         case SET_CURRENT:
             return {

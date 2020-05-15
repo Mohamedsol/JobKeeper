@@ -21,6 +21,7 @@ const JobsListForm = () => {
               status: 'applied'
           })
       }
+    // eslint-disable-next-line
     }, [jobsListContext, current]); 
 
 

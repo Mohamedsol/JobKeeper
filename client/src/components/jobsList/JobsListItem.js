@@ -4,12 +4,12 @@ import JobsListContext from '../../context/jobsList/jobsListContext';
 
 const JobsListItem = ({ job }) => {
 
-  const { id, jobTitle, companyName, city, status } = job;
+  const { _id, jobTitle, companyName, city, status } = job;
   const jobsListContext = useContext(JobsListContext);
   const { deleteJob, setCurrent, clearCurrent } = jobsListContext;
 
   const onDeleteJob = () => {
-    deleteJob(id);
+    deleteJob(_id);
     clearCurrent();
   }
 
