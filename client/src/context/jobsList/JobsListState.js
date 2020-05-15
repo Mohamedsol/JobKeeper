@@ -20,7 +20,9 @@ const JobsListState = props => {
   const initialState = {
     jobsList: [],
     current: null,
-    filtered: null
+    filtered: null,
+    error: null
+
   };
 
   const [state, dispatch] = useReducer(jobsListReducer, initialState);
@@ -30,10 +32,28 @@ const JobsListState = props => {
 
   // Add job
   
-    const addJob = job => {
-      
-      dispatch({ type: ADD_JOB, payload: job})
-    }
+    const addJob = async job => {
+
+        const config = {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+    
+        try {
+          const res = await axios.post('/api/jobsList', job, config);
+    
+          dispatch({
+            type: ADD_JOB,
+            payload: res.data
+          });
+        } catch (err) {
+          dispatch({
+            type: JOB_ERROR,
+            payload: err.response.msg
+          });
+        }
+      };
 
   // Delete job
     const deleteJob = id => {
@@ -79,6 +99,7 @@ const JobsListState = props => {
         jobsList: state.jobsList,
         current: state.current,
         filtered: state.filtered,
+        error: state.error,
         addJob,
         deleteJob,
         setCurrent,

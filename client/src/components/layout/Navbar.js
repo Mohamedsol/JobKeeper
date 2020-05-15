@@ -60,7 +60,7 @@ Navbar.propTypes = {
 };
 
 Navbar.defaultProps = {
-  title: 'Contact Keeper',
+  title: 'Job Keeper',
   icon: 'fas fa-id-card-alt'
 };
 

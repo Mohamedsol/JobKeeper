@@ -20,12 +20,12 @@ const JobsList = () => {
     <Fragment>
         <TransitionGroup>
             { filtered !== null ? filtered.map(job => (
-            <CSSTransition key={job.id} timeout={500} classNames='item'>
+            <CSSTransition key={job._id} timeout={500} classNames='item'>
                 <JobsListItem job={job}/>
             </CSSTransition>
                 )) 
             : jobsList.map(job => (
-            <CSSTransition key={job.id} timeout={500} classNames='item'>
+            <CSSTransition key={job._id} timeout={500} classNames='item'>
                 <JobsListItem job={job} />
             </CSSTransition>
       ))}

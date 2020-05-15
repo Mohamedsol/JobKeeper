@@ -50,7 +50,12 @@ export default (state, action) => {
             return {
                 ...state,
                 filtered: null
-            };       
+            };    
+        case JOB_ERROR:
+            return {
+                ...state,
+                error: action.payload
+            }       
         default:
             return state;
     }
