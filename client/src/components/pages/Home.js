@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from 'react';
+import Chart from '../layout/Chart'
 import JobsList from '../jobsList/JobsList'
 import JobsListForm from '../jobsList/JobsListForm'
 import JobsListFilter from '../jobsList/JobsListFilter'
@@ -18,6 +19,7 @@ const Home = () => {
     <div className='grid-2'>
         <div>
             <JobsListForm />
+            <Chart />
         </div>
         <div>
             <JobsListFilter />

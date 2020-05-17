@@ -23,6 +23,7 @@ const JobsListItem = ({ job }) => {
           className={
             'badge ' +
             (status === 'onsite interview' ? 'badge-success' : 'badge-primary')
+
           }
         >
           {status.charAt(0).toUpperCase() + status.slice(1)}
