@@ -12,12 +12,6 @@ const Chart = () => {
 
     const { jobsList } = jobsListContext;
 
-
-    const getData = async () => {
-        await jobsList !== null ? setData([...jobsList]) : console.log('null no');
-        console.log(jobsList)
-        console.log(data)
-    }
     const chart = () => {
 
         setChartData({
@@ -48,8 +42,6 @@ const Chart = () => {
 
     useEffect( () => {
         chart();
-        getData();
-        console.log('data', data);
     },[]);
 
     return ( 
